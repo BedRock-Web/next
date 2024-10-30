@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 
@@ -24,6 +24,7 @@ function EditPrompt() {
     };
     if (promptId) fetchPromptData();
   }, [promptId]);
+
   const EditPro = async (e) => {
     e.preventDefault();
     setsubmit(true);
@@ -36,6 +37,9 @@ function EditPrompt() {
           prompt: post.prompt,
           tags: post.tags,
         }),
+        headers: {
+          "Content-Type": "application/json", // Ensure the content type is set
+        },
       });
       if (response.ok) {
         route.push("/");
@@ -46,6 +50,7 @@ function EditPrompt() {
       setsubmit(false);
     }
   };
+
   return (
     <Form
       type="Edit"
@@ -57,4 +62,13 @@ function EditPrompt() {
   );
 }
 
-export default EditPrompt;
+// Wrap your component in a Suspense boundary
+const EditPromptWithSuspense = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EditPrompt />
+    </Suspense>
+  );
+};
+
+export default EditPromptWithSuspense;
