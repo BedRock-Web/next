@@ -6,12 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "now-build": "next build"
   },
   "dependencies": {
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.3",
-    "next": "14.2.15",
+    "next": "^14.2.15",
     "next-auth": "^4.24.8",
     "node": "^23.1.0",
     "react": "^18",
