@@ -8,10 +8,15 @@ const nextConfig = {
     domains: ["lh3.googleusercontent.com"],
   },
   webpack(config) {
+    // Disable caching to avoid PackFileCacheStrategy issues
+    config.cache = false;
+
+    // Keep your existing experiments configuration
     config.experiments = {
       ...config.experiments,
       topLevelAwait: true,
     };
+
     return config;
   },
 };
