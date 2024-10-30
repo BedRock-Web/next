@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react"; // Import Suspense from React
 import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 
@@ -7,8 +7,8 @@ function EditPrompt() {
   const route = useRouter();
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
-  const [submit, setsubmit] = useState(false);
-  const [post, setpost] = useState({
+  const [submit, setSubmit] = useState(false);
+  const [post, setPost] = useState({
     prompt: "",
     tags: "",
   });
@@ -17,7 +17,7 @@ function EditPrompt() {
     const fetchPromptData = async () => {
       const res = await fetch(`/api/prompt/${promptId}`);
       const data = await res.json();
-      setpost({
+      setPost({
         prompt: data.prompt,
         tags: data.tags,
       });
@@ -27,9 +27,9 @@ function EditPrompt() {
 
   const EditPro = async (e) => {
     e.preventDefault();
-    setsubmit(true);
+    setSubmit(true);
 
-    if (!promptId) alert("id nai");
+    if (!promptId) alert("ID not provided");
     try {
       const response = await fetch(`/api/prompt/${promptId}`, {
         method: "PATCH",
@@ -47,7 +47,7 @@ function EditPrompt() {
     } catch (error) {
       console.log(error);
     } finally {
-      setsubmit(false);
+      setSubmit(false);
     }
   };
 
@@ -56,19 +56,22 @@ function EditPrompt() {
       type="Edit"
       post={post}
       submit={submit}
-      setpost={setpost}
+      setpost={setPost}
       handelsubmit={EditPro}
     />
   );
 }
 
-// Wrap your component in a Suspense boundary
-const EditPromptWithSuspense = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <EditPrompt />
-    </Suspense>
-  );
-};
+// This should be used only if needed, if you are still getting the error, do not wrap it like this
+// const EditPromptWithSuspense = () => {
+//   return (
+//     <Suspense fallback={<div>Loading...</div>}>
+//       <EditPrompt />
+//     </Suspense>
+//   );
+// };
 
-export default EditPromptWithSuspense;
+// export default EditPromptWithSuspense;
+
+// If using App Router with pages, ensure to export EditPrompt directly
+export default EditPrompt;
