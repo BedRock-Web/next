@@ -10,8 +10,8 @@ const page = () => {
         <span className="orange_gradient text-center">ki jani</span>
       </h1>
       <p className="text-center desc">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dol
+        jani Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dol
       </p>
 
       <Feed />
