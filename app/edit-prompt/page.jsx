@@ -1,5 +1,4 @@
-"use client";
-import { useEffect, useState, Suspense } from "react"; // Import Suspense from React
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 
@@ -12,24 +11,36 @@ function EditPrompt() {
     prompt: "",
     tags: "",
   });
+  const [loading, setLoading] = useState(true); // Track loading state
 
   useEffect(() => {
     const fetchPromptData = async () => {
-      const res = await fetch(`/api/prompt/${promptId}`);
-      const data = await res.json();
-      setPost({
-        prompt: data.prompt,
-        tags: data.tags,
-      });
+      if (promptId) {
+        const res = await fetch(`/api/prompt/${promptId}`);
+        const data = await res.json();
+        setPost({
+          prompt: data.prompt,
+          tags: data.tags,
+        });
+      }
+      setLoading(false); // Set loading to false after fetching data
     };
-    if (promptId) fetchPromptData();
+
+    if (promptId) {
+      fetchPromptData();
+    } else {
+      setLoading(false); // If no promptId, no need to fetch
+    }
   }, [promptId]);
 
   const EditPro = async (e) => {
     e.preventDefault();
     setSubmit(true);
 
-    if (!promptId) alert("ID not provided");
+    if (!promptId) {
+      alert("ID not provided");
+    }
+
     try {
       const response = await fetch(`/api/prompt/${promptId}`, {
         method: "PATCH",
@@ -38,7 +49,7 @@ function EditPrompt() {
           tags: post.tags,
         }),
         headers: {
-          "Content-Type": "application/json", // Ensure the content type is set
+          "Content-Type": "application/json",
         },
       });
       if (response.ok) {
@@ -51,6 +62,11 @@ function EditPrompt() {
     }
   };
 
+  // If loading, show a fallback loader
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Form
       type="Edit"
@@ -62,16 +78,4 @@ function EditPrompt() {
   );
 }
 
-// This should be used only if needed, if you are still getting the error, do not wrap it like this
-// const EditPromptWithSuspense = () => {
-//   return (
-//     <Suspense fallback={<div>Loading...</div>}>
-//       <EditPrompt />
-//     </Suspense>
-//   );
-// };
-
-// export default EditPromptWithSuspense;
-
-// If using App Router with pages, ensure to export EditPrompt directly
 export default EditPrompt;
