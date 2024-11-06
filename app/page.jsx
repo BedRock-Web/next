@@ -7,7 +7,7 @@ const page = () => {
       <h1 className="head_text text-center">
         Jani na
         <br className="max-md:hidden" />
-        <span className="orange_gradient text-center">ki jani</span>
+        <span className="orange_gradient text-center">ki jani!</span>
       </h1>
       <p className="text-center desc">
         jani Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
