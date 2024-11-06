@@ -72,7 +72,7 @@ const Nav = () => {
                   </Link>
                   <Link
                     className="dropdown_link"
-                    href="/create-post"
+                    href="/create-prompt"
                     onClick={() => setDropDown(false)}
                   >
                     Create Post
